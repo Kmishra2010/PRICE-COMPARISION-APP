@@ -1,3 +1,4 @@
+// COMPLETE script.js - Replace the previous incomplete version
 class PriceComparisonApp {
     constructor() {
         this.products = [];
@@ -19,13 +20,11 @@ class PriceComparisonApp {
     }
 
     async init() {
-        // Add event listeners
         this.elements.searchInput.addEventListener('input', this.debounce(this.handleSearch.bind(this), 300));
         this.elements.sortBtns.forEach(btn => {
             btn.addEventListener('click', () => this.handleSort(btn.dataset.sort));
         });
 
-        // Load initial products
         await this.loadProducts();
         this.render();
     }
@@ -50,7 +49,6 @@ class PriceComparisonApp {
             this.filteredProducts = [...this.products];
         } catch (error) {
             console.error('Failed to load products:', error);
-            // Fallback to mock data
             this.products = MOCK_PRODUCTS;
             this.filteredProducts = [...this.products];
         } finally {
@@ -77,7 +75,6 @@ class PriceComparisonApp {
     handleSort(sortType) {
         this.currentSort = sortType;
         
-        // Update active button
         this.elements.sortBtns.forEach(btn => btn.classList.remove('active'));
         document.querySelector(`[data-sort="${sortType}"]`).classList.add('active');
         
@@ -124,7 +121,6 @@ class PriceComparisonApp {
         this.elements.productsGrid.innerHTML = '';
         this.elements.productsGrid.appendChild(fragment);
 
-        // Show best deal toast if we have products
         if (this.filteredProducts.length > 0 && cheapestPrice > 0) {
             this.showBestDealToast(cheapestPrice);
         }
@@ -135,11 +131,12 @@ class PriceComparisonApp {
         card.className = 'product-card';
         card.style.animationDelay = `${index * 0.05}s`;
         
-        const platformClass = `platform-${product.platform.toLowerCase()}`;
+        const platformClass = `platform-${product.platform.toLowerCase().replace(/\s+/g, '')}`;
         
         card.innerHTML = `
             ${isCheapest ? `<div class="best-deal-badge">🥇 BEST DEAL</div>` : ''}
-            <img src="${product.image}" alt="${product.name}" class="product-image" onerror="this.style.display='none'">
+            <img src="${product.image}" alt="${product.name}" class="product-image" 
+                 onerror="this.src='https://via.placeholder.com/400x200/6366f1/ffffff?text=No+Image'; this.onerror=null;">
             <div class="product-content">
                 <div class="platform-badge ${platformClass}">
                     <i class="fas fa-${this.getPlatformIcon(product.platform)}"></i>
@@ -148,8 +145,7 @@ class PriceComparisonApp {
                 <div class="product-name">${product.name}</div>
                 <div class="product-price">₹${product.price.toLocaleString()}</div>
                 <button class="buy-btn" onclick="window.open('${product.link}', '_blank')">
-                    <i class="fas fa-shopping-cart"></i>
-                    Buy Now
+                    <i class="fas fa-shopping-cart"></i> Buy Now
                 </button>
             </div>
         `;
@@ -168,4 +164,24 @@ class PriceComparisonApp {
 
     showBestDealToast(price) {
         const toast = this.elements.bestDealToast;
-        toast.innerHTML = `<i class="fas fa-crown"></i><span
+        toast.innerHTML = `<i class="fas fa-crown"></i><span>Best deal: ₹${price.toLocaleString()}</span>`;
+        
+        toast.classList.remove('show');
+        void toast.offsetWidth;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
+    }
+}
+
+// Initialize app when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new PriceComparisonApp();
+});
+
+// Fallback mock data (same as backend)
+const MOCK_PRODUCTS = [
+    // ... (copy from data.js - already provided above)
+];

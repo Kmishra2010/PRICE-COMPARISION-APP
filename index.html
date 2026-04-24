@@ -1,17 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Price Comparison</title>
+    <meta charset="UTF-8">
+    <title>DealFinder</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🏸 Price Comparison App</h1>
+<header>
+    <h1>🔥 DealFinder</h1>
+    <p>Find the best price instantly</p>
+</header>
 
-<input type="text" id="search" placeholder="Search product...">
-<button onclick="searchProduct()">Search</button>
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search for products...">
+</div>
 
-<div id="results"></div>
+<div class="controls">
+    <button onclick="sortLow()">⬇ Lowest Price</button>
+    <button onclick="sortHigh()">⬆ Highest Price</button>
+</div>
+
+<div id="results" class="grid"></div>
 
 <script src="script.js"></script>
 

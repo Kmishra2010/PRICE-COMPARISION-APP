@@ -2,27 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DealFinder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PricePulse - Smart Price Comparison</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-bolt"></i>
+                        <span>PricePulse</span>
+                    </div>
+                    <div class="search-container">
+                        <div class="search-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="searchInput" class="search-input" placeholder="Search for products... (iPhone, Laptop, etc.)">
+                            <div class="search-loading" id="searchLoading">
+                                <div class="spinner"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-<header>
-    <h1>🔥 DealFinder</h1>
-</header>
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Stats & Sorting -->
+                <div class="stats-sorting">
+                    <div class="stats">
+                        <span id="totalProducts">0</span> products found
+                    </div>
+                    <div class="sorting">
+                        <button class="sort-btn active" data-sort="price-asc">
+                            <i class="fas fa-sort-amount-up"></i> Low to High
+                        </button>
+                        <button class="sort-btn" data-sort="price-desc">
+                            <i class="fas fa-sort-amount-down"></i> High to Low
+                        </button>
+                    </div>
+                </div>
 
-<div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search product...">
-</div>
+                <!-- Results -->
+                <div class="results-container">
+                    <div class="empty-state" id="emptyState">
+                        <i class="fas fa-search"></i>
+                        <h3>Start searching for products</h3>
+                        <p>Enter a product name to compare prices across top stores</p>
+                    </div>
+                    <div class="products-grid" id="productsGrid"></div>
+                </div>
+            </div>
+        </main>
 
-<div class="controls">
-    <button id="lowBtn">Lowest Price</button>
-    <button id="highBtn">Highest Price</button>
-</div>
+        <!-- Best Deal Toast -->
+        <div class="toast" id="bestDealToast">
+            <i class="fas fa-crown"></i>
+            <span>Best deal unlocked!</span>
+        </div>
+    </div>
 
-<div id="results" class="grid"></div>
-
-<script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
